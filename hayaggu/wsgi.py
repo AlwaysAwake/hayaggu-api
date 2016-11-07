@@ -15,6 +15,6 @@ sys.path.insert(1, os.path.abspath(os.path.join(os.path.dirname(__file__), "../"
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ["DJANGO_SETTINGS_MODULE"] = "dlimited.settings"
+os.environ["DJANGO_SETTINGS_MODULE"] = "hayaggu.settings"
 
 application = get_wsgi_application()
