@@ -5,6 +5,7 @@ import json
 
 from .models import DemoInfo
 
+
 def demo_list(request):
     demo_list = list(DemoInfo.objects.all())
 
@@ -15,7 +16,7 @@ def demo_list(request):
 
 def demo_detail(request, demo_id):
     try:
-        demo = DemoInfo.object.get(demo_id)
+        demo = model_to_dict(DemoInfo.objects.get(id=demo_id))
 
         return JsonResponse({'result': 1, 'demo': demo})
 
