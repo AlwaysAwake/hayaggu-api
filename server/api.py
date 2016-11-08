@@ -2,12 +2,27 @@ from django.http import JsonResponse
 from django.forms.models import model_to_dict
 
 import json
+import datetime
 
 from .models import DemoInfo
 
 
 def demo_list(request):
-    demo_list = list(DemoInfo.objects.all())
+    params = request.GET
+
+    demo_list = DemoInfo.objects.all()
+
+    if 'start' in params:
+        start = params['start']
+
+        demo_list = demo_list.filter(sdate__gte=start)
+
+    if 'end' in params:
+        end = datetime.datetime.strptime(params['end'], '%Y-%m-%d') + datetime.timedelta(days=1)
+
+        demo_list = demo_list.filter(sdate__lt=end)
+
+    demo_list = list(demo_list)
 
     demo_list = [model_to_dict(demo) for demo in demo_list]
 
