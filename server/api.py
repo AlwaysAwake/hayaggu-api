@@ -10,7 +10,7 @@ from .models import DemoInfo
 def demo_list(request):
     params = request.GET
 
-    demo_list = DemoInfo.objects.all()
+    demo_list = DemoInfo.objects.all().order_by('-sdate')
 
     if 'start' in params:
         start = params['start']
