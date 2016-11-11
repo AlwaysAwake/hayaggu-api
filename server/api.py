@@ -4,7 +4,7 @@ from django.forms.models import model_to_dict
 import json
 import datetime
 
-from .models import DemoInfo
+from .models import *
 
 
 def demo_list(request):
@@ -34,6 +34,23 @@ def demo_detail(request, demo_id):
         demo = model_to_dict(DemoInfo.objects.get(id=demo_id))
 
         return JsonResponse({'result': 1, 'demo': demo})
+
+    except KeyError as e:
+        return JsonResponse({"result": 0, 'message': "KeyError " + str(e)})
+
+    except Exception as e:
+        return JsonResponse({"result": 0, 'message': str(e)})
+
+
+def comment_list(request, demo_id):
+    try:
+        comments = Comment.objects.filter(demo_id=demo_id)
+        
+        comment_list = list(comments)
+
+        comment_list = [model_to_dict(comment) for comment in comment_list]
+
+        return JsonResponse({'result': 1, 'comments': comment_list})
 
     except KeyError as e:
         return JsonResponse({"result": 0, 'message': "KeyError " + str(e)})

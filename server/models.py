@@ -26,11 +26,22 @@ class DemoInfo(models.Model):
     status = models.CharField(max_length=5)
     sdate = models.DateTimeField()
     edate = models.DateTimeField(blank=True, null=True)
-    cdate = models.DateTimeField(default=datetime.datetime.now())
+    cdate = models.DateTimeField()
 
     class Meta:
         managed = False
         db_table = 'demo_info'
+
+
+class Comment(models.Model):
+    demo = models.ForeignKey(DemoInfo, on_delete=models.CASCADE)
+    writer = models.CharField(max_length=50)
+    content = models.CharField(max_length=255, blank=True, null=True)
+    cdate = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'comment'
 
 
 class DjangoMigrations(models.Model):

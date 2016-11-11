@@ -22,5 +22,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^demo/list$', api.demo_list),
-    url(r'^demo/(?P<demo_id>\d+)$', api.demo_detail)
+    url(r'^demo/(?P<demo_id>\d+)$', api.demo_detail),
+
+    url(r'^comment/(?P<demo_id>\d+)$', api.comment_list)
 ]
