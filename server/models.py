@@ -16,6 +16,7 @@ class DemoInfo(models.Model):
     title = models.CharField(max_length=50, blank=True, null=True)
     host = models.CharField(max_length=50, blank=True, null=True)
     description = models.CharField(max_length=255, blank=True, null=True)
+    region = models.CharField(max_length=20)
     source = models.CharField(max_length=50)
     source_latitude = models.FloatField()
     source_longitude = models.FloatField()
