@@ -44,9 +44,13 @@ def demo_detail(request, demo_id):
 
 def comment_list(request, demo_id):
     try:
+        params = request.GET
+        offset = int(params.get('offset', 0))
+        count = int(params.get('count', 20))
+
         comments = Comment.objects.filter(demo_id=demo_id)
-        
-        comment_list = list(comments)
+
+        comment_list = list(comments)[offset: offset+count]
 
         comment_list = [model_to_dict(comment) for comment in comment_list]
 
