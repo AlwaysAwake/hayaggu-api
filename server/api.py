@@ -61,3 +61,22 @@ def comment_list(request, demo_id):
 
     except Exception as e:
         return JsonResponse({"result": 0, 'message': str(e)})
+
+
+def add_comment(request):
+    try:
+        params = request.GET
+        demo_id = params.get('demo_id')
+        writer = params.get('writer', '')
+        content = params.get('content', '')
+
+        new_comment = Comment(demo_id=demo_id, writer=writer, content=content, cdate=datetime.datetime.now())
+        new_comment.save()
+
+        return JsonResponse({'result': 1, 'comment': model_to_dict(new_comment)})
+
+    except KeyError as e:
+        return JsonResponse({"result": 0, 'message': "KeyError " + str(e)})
+
+    except Exception as e:
+        return JsonResponse({"result": 0, 'message': str(e)})
