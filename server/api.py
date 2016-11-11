@@ -68,7 +68,7 @@ def comment_list(request):
 @csrf_exempt
 def add_comment(request):
     try:
-        params = request.GET if request.method == 'GET' else request.method == 'POST'
+        params = request.GET if request.method == 'GET' else request.POST
 
         demo_id = params.get('demo_id')
         writer = params.get('writer', '')
