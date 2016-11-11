@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from django.forms.models import model_to_dict
 
 import json
@@ -64,6 +65,7 @@ def comment_list(request):
         return JsonResponse({"result": 0, 'message': str(e)})
 
 
+@csrf_exempt
 def add_comment(request):
     try:
         params = request.GET if request.method == 'GET' else request.method == 'POST'
