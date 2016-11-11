@@ -42,9 +42,10 @@ def demo_detail(request, demo_id):
         return JsonResponse({"result": 0, 'message': str(e)})
 
 
-def comment_list(request, demo_id):
+def comment_list(request):
     try:
         params = request.GET
+        demo_id = int(params.get('demo_id', 0))
         offset = int(params.get('offset', 0))
         count = int(params.get('count', 20))
 
@@ -65,7 +66,8 @@ def comment_list(request, demo_id):
 
 def add_comment(request):
     try:
-        params = request.GET
+        params = request.GET if request.method == 'GET' else request.method == 'POST'
+
         demo_id = params.get('demo_id')
         writer = params.get('writer', '')
         content = params.get('content', '')
