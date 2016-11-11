@@ -50,7 +50,7 @@ def comment_list(request):
         offset = int(params.get('offset', 0))
         count = int(params.get('count', 20))
 
-        comments = Comment.objects.filter(demo_id=demo_id)
+        comments = Comment.objects.filter(demo_id=demo_id).order_by('-id')
 
         comment_list = list(comments)[offset: offset+count]
 
