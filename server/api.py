@@ -50,11 +50,17 @@ def comment_list(request):
         offset = int(params.get('offset', 0))
         count = int(params.get('count', 20))
 
-        comments = Comment.objects.filter(demo_id=demo_id).order_by('-id')
+        if demo_id < 1:
+            comments = Comment.objects.all().order_by('-id')
 
-        comment_list = list(comments)[offset: offset+count]
+            comment_list = list(comments)[offset: offset+count]
+            comment_list = [model_to_dict(comment) for comment in comment_list]
 
-        comment_list = [model_to_dict(comment) for comment in comment_list]
+        else:
+            comments = Comment.objects.filter(demo_id=demo_id).order_by('-id')
+
+            comment_list = list(comments)[offset: offset+count]
+            comment_list = [model_to_dict(comment) for comment in comment_list]
 
         return JsonResponse({'result': 1, 'comments': comment_list})
 
