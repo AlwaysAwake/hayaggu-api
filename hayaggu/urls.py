@@ -26,4 +26,7 @@ urlpatterns = [
 
     url(r'^comment/list$', api.comment_list),
     url(r'^comment/new$', api.add_comment),
+
+    url(r'^blinker/list$', api.get_blinkers),
+    url(r'^blinker/new$', api.add_blinker),
 ]

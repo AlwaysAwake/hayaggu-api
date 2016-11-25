@@ -90,3 +90,56 @@ def add_comment(request):
 
     except Exception as e:
         return JsonResponse({"result": 0, 'message': str(e)})
+
+
+@csrf_exempt
+def get_blinkers(request):
+    try:
+        params = request.GET
+        offset = int(params.get('offset', 0))
+        count = int(params.get('count', 20))
+
+        blinkers = Blinker.objects.all().order_by('-count')
+
+        blinker_list = list(blinkers)[offset: offset + count]
+        blinker_list = [model_to_dict(blinker) for blinker in blinker_list]
+
+        return JsonResponse({'result': 1, 'blinkers': blinker_list})
+
+    except KeyError as e:
+        return JsonResponse({"result": 0, 'message': "KeyError " + str(e)})
+
+    except Exception as e:
+        return JsonResponse({"result": 0, 'message': str(e)})
+
+
+@csrf_exempt
+def add_blinker(request):
+    try:
+        params = request.GET if request.method == 'GET' else request.POST
+
+        writer = params.get('writer', '')
+        content = params.get('content', '')
+
+        query = Blinker.objects.filter(content=content)
+
+        if query:
+            blinker = query[0]
+            blinker.count += 1
+            blinker.save()
+
+            return JsonResponse({'result': 1, 'blinker': model_to_dict(blinker)})
+
+        else:
+            new_blinker = Blinker(writer=writer, content=content, cdate=datetime.datetime.now())
+            new_blinker.save()
+
+            return JsonResponse({'result': 1, 'blinker': model_to_dict(new_blinker)})
+
+    except KeyError as e:
+        return JsonResponse({"result": 0, 'message': "KeyError " + str(e)})
+
+    except Exception as e:
+        return JsonResponse({"result": 0, 'message': str(e)})
+
+

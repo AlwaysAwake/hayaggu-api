@@ -52,3 +52,14 @@ class DjangoMigrations(models.Model):
     class Meta:
         managed = False
         db_table = 'django_migrations'
+
+
+class Blinker(models.Model):
+    writer = models.CharField(max_length=50, blank=True, null=True)
+    content = models.CharField(max_length=255, blank=True, null=True)
+    count = models.IntegerField(default=0)
+    cdate = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'blinker'
